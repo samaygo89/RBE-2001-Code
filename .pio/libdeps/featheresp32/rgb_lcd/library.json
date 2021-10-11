@@ -1,0 +1,19 @@
+{
+    "authors": {
+        "name": "Isaac Martinez",
+        "url": "https://os.mbed.com/users/nono411/"
+    },
+    "build": {
+        "builder": "MbedLibBuilder"
+    },
+    "description": "Library to operate Grove-LCD RGB Backlight v4.0",
+    "frameworks": "mbed",
+    "keywords": [],
+    "name": "rgb_lcd",
+    "platforms": "*",
+    "repository": {
+        "type": "hg",
+        "url": "https://os.mbed.com/users/nono411/code/rgb_lcd/"
+    },
+    "version": "0.0.0+sha.fb21134ce1b9"
+}
