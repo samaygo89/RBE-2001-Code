@@ -4,47 +4,67 @@
 #include <IRdecoder.h>
 #include <BlueMotor.h>
 #include <arm.h>
-#include <IR_Buttons.h>
 #include <PID_v1.h>
 Chassis body;
-const uint8_t IR_DETECTOR_PIN = 34;//Figure out
-IRDecoder decoder(IR_DETECTOR_PIN);
-const int TrigPin = 23;
-const int EchoPin = 22;
+const int TrigPin = 17;
+const int EchoPin = 16;
 const int PhotoResistorR = 39;
 const int PhotoResistorL = 36;
+IRDecoder decoder(34);
 Arm arm;
-enum STATE
+enum ROBOT_STATE
 {
-  IDLE,
-  LINING,
-  DROPPING_OFF_PLATE,
-  PICKING_UP_PLATE
+  ROBOT_IDLE,
+  ROBOT_LINING,
+  ROBOT_DROPPING_OFF_PLATE,
+  ROBOT_PICKING_UP_PLATE
 };
 enum ANGLE
 {
   ROBOT_25,
   ROBOT_45
 };
-STATE robot_state=IDLE;
-ANGLE target_angle;
-void setup() {
-    Serial.begin(115200);
-    body.AttachComponents(EchoPin,TrigPin,PhotoResistorL,PhotoResistorR);
-    arm.setup();
-    decoder.init();
-    ESP32PWM::allocateTimer(2);
+void setup()
+{
+  Serial.begin(115200);
+  body.AttachComponents(EchoPin, TrigPin, PhotoResistorL, PhotoResistorR);
+  arm.setup();
+  ESP32PWM::allocateTimer(2);
+  decoder.init();
 }
-int value=0;
-void loop() {
-    arm.SetArmEffort(255);
-    //Serial.print("hi");
-    //arm.SetArmEffort(value);
-    //arm.open_gripper();
-    //delay(1000);
-    //arm.SetArmEffort(-value);
-    //arm.close_gripper();
-    //delay(1000);
+/**
+long int i = 0;
+long int prev_position = 0;
+int prev_time1 = 0;
+float adjustedEffort = 0;
+int currtime1 = 0;
+long int curr_position = 0;
+float velocity=0;
+**/
+long int PIDtimer=0;
+long int currtime1=0;
+int value=-1;
+void loop()
+{
 
-    
+  
+    int value = decoder.getKeyCode();
+    currtime1 = millis();
+    if(currtime1>PIDtimer+10){
+      Serial.println(body.getDistanceCM());
+      arm.SetPIDEffort();
+      PIDtimer=currtime1;
+    }
+  //adjustedEffort=85+(255-85)*i/255;
+  //arm.SetArmEffort(i);
+  //currtime1 = millis();
+  //curr_position = arm.ArmMotor.getPosition();
+  //velocity=(curr_position - prev_position) / (currtime1 - prev_time1);
+  //velocity=arm.ArmMotor.getPosition()-prev_position;
+  //velocity=velocity/(currtime1-prev_time1);
+  //Serial.printf("%i,%f,%f \n", i, adjustedEffort, velocity);
+  //i++;
+  //prev_time1 = currtime1;
+  //prev_position = curr_position;
+  //delay(500);
 }

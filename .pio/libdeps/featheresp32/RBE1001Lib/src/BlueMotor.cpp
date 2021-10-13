@@ -19,7 +19,7 @@ const int EncoderArray[4][4] = {
 
 void IRAM_ATTR isr() {
   portENTER_CRITICAL_ISR(&mux);
-  int new_val = (digitalRead(18) << 1) | digitalRead(5);
+  int new_val = (digitalRead(5) << 1) | digitalRead(18);
   count += EncoderArray[prev_val][new_val];
   prev_val = new_val;
   portEXIT_CRITICAL_ISR(&mux);

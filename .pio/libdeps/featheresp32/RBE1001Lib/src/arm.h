@@ -8,11 +8,11 @@ class Arm{
     Servo gripper;
     //ESP32AnalogRead servoPositionFeedback;
     void setup();
-    int SetPIDEffort();
-    void SetArmEffort(float effort);
+    void SetPIDEffort();
+    void SetArmEffort(int effort);
     void open_gripper();
     void close_gripper();
-    int ArmCountSetPoint=0;
+    int ArmCountSetPoint;
     
     
 };
