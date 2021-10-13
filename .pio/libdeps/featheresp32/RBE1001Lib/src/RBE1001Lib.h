@@ -25,7 +25,7 @@
 //A3
 #define RIGHT_LINE_SENSE 39
 //A2
-#define SERVO_FEEDBACK_SENSOR 34
+#define IR 34
 /**
  * Gripper pin for Servo
  */
