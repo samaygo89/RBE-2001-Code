@@ -11,9 +11,9 @@ class BlueMotor {
   //    static portMUX_TYPE mux;
   void setEffort(int effort, bool clockwise);
   
-  const int PWM = 2;
-  const int AIN2 = 21;
-  const int AIN1 = 19;
+  const int PWM = 23;
+  const int AIN2 = 19;
+  const int AIN1 = 21;
   const int ENCA = 5;
   const int ENCB =18;
 };

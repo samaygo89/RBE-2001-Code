@@ -5,9 +5,10 @@ void Arm::setup()
 {
     ArmMotor.setup();
     ESP32PWM::allocateTimer(1);
+    ESP32PWM::allocateTimer(2);
     gripper.attach(SERVO_PIN);
     ArmMotor.reset();
-    ArmCountSetPoint = 4250; //5700 lift 25 5725 drop25
+    ArmCountSetPoint = 0; //5700 lift 25 5725 drop25
 }
 
 int deadband = 85;
@@ -35,11 +36,12 @@ void Arm::SetPIDEffort()
 {
     error = ArmCountSetPoint - ArmMotor.getPosition();
     currtime = millis();
+    
     if (currtime > prev_time + 10)
     {
         PIDEffort = Kp * error + Ki * error * (currtime - prev_time) - Kd * (error - prev_error) / (currtime - prev_time);
-        Serial.println(PIDEffort);
         SetArmEffort(PIDEffort);
+        
         prev_time = currtime;
         prev_error = error;
     }
